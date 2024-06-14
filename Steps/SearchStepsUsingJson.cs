@@ -10,7 +10,7 @@ using PlaywrightSpecFlowFramework.Utils;
 namespace PlaywrightSpecFlowFramework.Steps;
 
 [Binding]
-public class SearchStepsUsingJSON
+public class SearchStepsUsingJson
 {
     private readonly IPage _user;
     private readonly IConfiguration _configuration;
@@ -18,7 +18,7 @@ public class SearchStepsUsingJSON
     private readonly ResultsPage _resultsPage;
     private readonly SearchData _searchData;
 
-    public SearchStepsUsingJSON(Hooks.Hooks hooks, IConfiguration configuration, HomePage homePage, ResultsPage resultsPage)
+    public SearchStepsUsingJson(Hooks.Hooks hooks, IConfiguration configuration, HomePage homePage, ResultsPage resultsPage)
     {
         _user = hooks.User;
         _configuration = configuration;
