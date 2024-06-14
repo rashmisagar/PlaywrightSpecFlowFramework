@@ -13,6 +13,7 @@ namespace PlaywrightSpecFlowFramework.Hooks
     {
         private static IConfiguration? _configuration;
         public IPage User { get; private set; } = null!;
+        private readonly PlaywrightDriver _playwrightDriver = new PlaywrightDriver();
 
         [BeforeScenario]
         public async Task BeforeScenario(ObjectContainer testThreadContainer)
@@ -21,10 +22,10 @@ namespace PlaywrightSpecFlowFramework.Hooks
             testThreadContainer.RegisterInstanceAs<IConfiguration>(_configuration);
 
             var playwright = await Playwright.CreateAsync();
-            var browser = await InitialiseBrowser(playwright);
+            var browser = await _playwrightDriver.InitialiseBrowser(playwright);
 
             var browserContext = await browser.NewContextAsync();
-            User = await InitialisePage(browserContext);
+            User = await _playwrightDriver.InitialisePage(browserContext);
         }
 
         private IConfiguration LoadConfiguration()
@@ -33,19 +34,6 @@ namespace PlaywrightSpecFlowFramework.Hooks
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-        }
-
-        private async Task<IBrowser> InitialiseBrowser(IPlaywright playwright)
-        {
-            return await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-            {
-                Headless = false
-            });
-        }
-
-        private async Task<IPage> InitialisePage(IBrowserContext browserContext)
-        {
-            return await browserContext.NewPageAsync();
         }
     }
 }

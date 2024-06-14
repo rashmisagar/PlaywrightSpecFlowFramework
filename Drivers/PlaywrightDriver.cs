@@ -1,33 +1,18 @@
+using System.Threading.Tasks;
 using Microsoft.Playwright;
-
-namespace PlaywrightSpecFlowFramework.Drivers;
 
 public class PlaywrightDriver
 {
-    private static IPlaywright? _playwright;
-    private static IBrowser? _browser;
-    private IPage? _page;
-
-    public static async Task InitializeAsync()
+    public async Task<IBrowser> InitialiseBrowser(IPlaywright playwright)
     {
-        _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false });
+        return await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+        {
+            Headless = false
+        });
     }
 
-    public async Task<IPage?> NewPageAsync()
+    public async Task<IPage> InitialisePage(IBrowserContext browserContext)
     {
-        if (_browser != null) _page = await _browser.NewPageAsync();
-        return _page;
-    }
-
-    public async Task ClosePageAsync()
-    {
-        if (_page != null) await _page.CloseAsync();
-    }
-
-    public static async Task DisposeAsync()
-    {
-        if (_browser != null) await _browser.CloseAsync();
-        _playwright?.Dispose();
+        return await browserContext.NewPageAsync();
     }
 }
