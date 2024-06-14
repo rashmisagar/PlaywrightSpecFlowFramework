@@ -6,6 +6,4 @@ Feature: DuckDuckGo Search Functionality using JSON data
   Scenario: Search for a term on DuckDuckGo using JSON data
     Given the user is on the DuckDuckGo home page
     When the user searches for a term from the data
-    Then the search results should contain the term from the data
-    And I navigate to the search result at index 0
-    Then the element with selector "h1" should be present
+    Then the search results show the term as the first result

@@ -24,41 +24,30 @@ public class SearchStepsUsingJSON
         _configuration = configuration;
         _homePage = homePage;
         _resultsPage = resultsPage;
-        _searchData = hooks.SearchData;
+        _searchData = JsonReader.LoadJsonData<SearchData>("TestData/searchTerms.json");
     }
 
     [Given(@"the user navigates to the DuckDuckGo home page")]
     public async Task GivenTheUserNavigatesToTheDuckDuckGoHomePage()
     {
-        var bingUrl = _configuration["BingUrl"];
-        if (bingUrl != null) await _homePage.NavigateAsync(bingUrl);
+        var ddgUrl = _configuration["DDGUrl"];
+        if (ddgUrl != null) await _homePage.NavigateAsync(ddgUrl);
     }
 
     [When(@"the user searches for a term from the data")]
     public async Task WhenTheUserSearchesForATermFromTheData()
     {
         var searchTerm = _searchData.SearchTerms.First();
-        await _homePage.SearchAsync(searchTerm);
+        await _homePage.SearchTermAndEnter(searchTerm);
     }
 
-    [Then(@"the search results should contain the term from the data")]
-    public async Task ThenTheSearchResultsShouldContainTheTermFromTheData()
+    [Then(@"the search results show the term as the first result")]
+    public async Task ThenTheSearchResultsShowTheTermAsTheFirstResult()
     {
         var searchTerm = _searchData.SearchTerms.First();
-        var result = await _resultsPage.VerifySearchResultsAsync(searchTerm);
-        Assert.IsTrue(result, "Search results did not contain the expected text.");
-    }
-    
-    [Then(@"I navigate to the search result at index (.*)")]
-    public async Task WhenINavigateToTheSearchResultAtIndex(int index)
-    {
-        await _resultsPage.NavigateToResultByIndexAsync(index);
-    }
-
-    [Then(@"the element with selector ""(.*)"" should be present")]
-    public async Task ThenTheElementWithSelectorShouldBePresent(string selector)
-    {
-        var isPresent = await _resultsPage.IsElementPresentAsync(selector);
-        isPresent.Should().BeTrue();
+        //Assert the page content
+        await _resultsPage.AssertPageContent(searchTerm);
+        //Assert the first search result (at index of 0)
+        await _resultsPage.AssertSearchResultAtIndex(searchTerm, 0);
     }
 }

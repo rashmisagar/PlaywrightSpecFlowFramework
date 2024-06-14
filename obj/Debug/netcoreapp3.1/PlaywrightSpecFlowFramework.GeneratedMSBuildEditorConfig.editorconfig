@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = PlaywrightSpecFlowFramework
+build_property.ProjectDir = /Users/rashmisagar/dotnet-projects/version2/PlaywrightSpecFlowFramework/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

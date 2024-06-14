@@ -1,14 +1,15 @@
 using System.IO;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace PlaywrightSpecFlowFramework.Utils
 {
-    public static class JsonReader
+    public class JsonReader
     {
-        public static T? ReadJsonFile<T>(string filePath)
+        public static T LoadJsonData<T>(string filePath)
         {
-            var jsonString = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<T>(jsonString);
+            string jsonData = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<T>(jsonData);
         }
     }
 }

@@ -1,35 +1,24 @@
 using Microsoft.Playwright;
+using System.Threading.Tasks;
 
-namespace PlaywrightSpecFlowFramework.Pages;
-
-public class ResultsPage
+namespace PlaywrightSpecFlowFramework.Pages
 {
-    
-    private readonly IPage _user;
-
-    public ResultsPage(Hooks.Hooks hooks)
+    public class ResultsPage : BasePage
     {
-        _user = hooks.User;
-    }
-    
-    private ILocator SearchContent => _user.Locator("body");
-    private ILocator ResultLink => _user.Locator("a.result__a");
+        private ILocator SearchInput => GetLocator("input[id='search_form_input']");
+        //private ILocator SearchContent => GetLocator("body");
+        private ILocator ResultLink => GetLocator("a.result__a");
 
-    public async Task<bool> VerifySearchResultsAsync(string query)
-    {
-        var content = await SearchContent.TextContentAsync();
-        return content != null && content.Contains(query);
-    }
+        public ResultsPage(Hooks.Hooks hooks) : base(hooks) { }
+   
+        public async Task AssertPageContent(string searchTerm)
+        {
+            await Assertions.Expect(SearchInput).ToHaveValueAsync(searchTerm);
+        }
 
-    public async Task NavigateToResultByIndexAsync(int index)
-    {
-        var resultLink = ResultLink.Nth(index);
-        await resultLink.ClickAsync();
-    }
-
-    public async Task<bool> IsElementPresentAsync(string selector)
-    {
-        var element = _user.Locator(selector);
-        return await element.CountAsync() > 0;
+        public async Task AssertSearchResultAtIndex(string searchTerm, int resultIndex)
+        {
+            await Assertions.Expect(ResultLink.Nth(resultIndex)).ToContainTextAsync(searchTerm);
+        }
     }
 }

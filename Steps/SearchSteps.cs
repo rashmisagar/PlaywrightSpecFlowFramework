@@ -6,7 +6,6 @@ using NUnit.Framework;
 using PlaywrightSpecFlowFramework.Pages;
 using TechTalk.SpecFlow;
 using Microsoft.Extensions.Configuration;
-using PlaywrightSpecFlowFramework.Utils;
 
 namespace PlaywrightSpecFlowFramework.Steps;
 
@@ -39,10 +38,13 @@ public class SearchSteps
         await _homePage.SearchTermAndEnter(searchTerm);
     }
 
-    [Then(@"the search results page shows '([^']*)' in the search results")]
-    public async Task ThenTheSearchResultsPageShowsInTheSearchResults(string searchTerm)
-    { 
-        var result = await _resultsPage.VerifySearchResultsAsync(searchTerm);
-        Assert.IsTrue(result, "Search results did not contain the expected text.");
+    [Then(@"the search results show '(.*)' as the first result")]
+    public async Task ThenTheSearchResultsShowAsTheFirstResult(string searchTerm)
+    {
+        //Assert the page content
+        await _resultsPage.AssertPageContent(searchTerm);
+        
+        //Assert the first search result (at index of 0)
+        await _resultsPage.AssertSearchResultAtIndex(searchTerm, 0);
     }
 }
