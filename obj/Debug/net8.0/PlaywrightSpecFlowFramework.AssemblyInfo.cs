@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlaywrightSpecFlowFramework")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bde0554212d0f76476f5e314f5f7b3e6dcbd71e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+533c1d429eda8ead85fea36a76f0274fefa2af90")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlaywrightSpecFlowFramework")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlaywrightSpecFlowFramework")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

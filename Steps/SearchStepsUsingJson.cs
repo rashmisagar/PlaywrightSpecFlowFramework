@@ -27,13 +27,6 @@ public class SearchStepsUsingJson
         _searchData = JsonReader.LoadJsonData<SearchData>("TestData/searchTerms.json");
     }
 
-    [Given(@"the user navigates to the DuckDuckGo home page")]
-    public async Task GivenTheUserNavigatesToTheDuckDuckGoHomePage()
-    {
-        var ddgUrl = _configuration["DDGUrl"];
-        if (ddgUrl != null) await _homePage.NavigateAsync(ddgUrl);
-    }
-
     [When(@"the user searches for a term from the data")]
     public async Task WhenTheUserSearchesForATermFromTheData()
     {

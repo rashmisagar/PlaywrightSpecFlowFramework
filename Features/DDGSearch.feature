@@ -12,4 +12,3 @@
        | SearchTerm | Result     |
        | playwright | playwright |
        | specflow   | specflow   |
-    
