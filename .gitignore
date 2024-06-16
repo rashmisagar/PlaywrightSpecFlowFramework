@@ -1,4 +1,4 @@
 *.feature.cs
 .idea/
 bin/
-TestData/appsettings.json
+/TestData/appsettings.json
